@@ -6,8 +6,9 @@ from pygame.draw import *
 
 """Модуль визуализации.
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
-Функции, создающие гaрафические объекты и перемещающие их на экране, принимают физические координаты
+Функции, создающие графические объекты и перемещающие их на экране, принимают физические координаты
 """
+
 
 header_font = "Arial-16"
 """Шрифт в заголовке"""
@@ -44,7 +45,7 @@ def scale_x(x):
     **x** — x-координата модели.
     """
 
-    return int(x*scale_factor) + window_width//2
+    return (x*scale_factor) + window_width/2
 
 
 def scale_y(y):
@@ -59,7 +60,7 @@ def scale_y(y):
     **y** — y-координата модели.
     """
 
-    return int(-y*scale_factor) + window_height//2
+    return (-y*scale_factor) + window_height/2
 
 
 if __name__ == "__main__":
@@ -70,21 +71,15 @@ class Drawer:
     def __init__(self, screen):
         self.screen = screen
 
+    def __draw_object(self, object_):
+        circle(self.screen, object_.color, (scale_x(object_.x), scale_y(object_.y)), object_.R)
 
-    def update(self, figures, ui):
+    def update(self, ui):
         self.screen.fill((0, 0, 0))
-        for figure in figures:
-            figure.drawOn(self.screen)
+        from solar_model import space_objects
+        for figure in space_objects:
+            self.__draw_object(figure)
         
         ui.blit()
         ui.update()
         pg.display.update()
-
-
-class DrawableObject:
-    def __init__(self, obj):
-        self.obj = obj
-
-    def drawOn(self, surface):
-        object_ = self.obj
-        circle(surface, object_.color, (scale_x(object_.x), scale_y(object_.y)), object_.R)
