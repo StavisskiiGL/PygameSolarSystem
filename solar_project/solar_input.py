@@ -3,6 +3,7 @@
 
 from solar_model import Celestial
 from solar_vis import calculate_scale_factor
+from tkinter import filedialog
 
 
 def open_file():
@@ -10,15 +11,15 @@ def open_file():
     функцию считывания параметров системы небесных тел из данного файла.
     Считанные объекты сохраняются в глобальный список space_objects
     """
-    in_filename = "solar_system.txt"
-    space_objects = __read_space_objects_data_from_file(in_filename)
+    
+    space_objects = __read_space_objects_data_from_file()
     max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     print(max_distance)
     calculate_scale_factor(max_distance)
     return space_objects
 
 
-def __read_space_objects_data_from_file(input_filename):
+def __read_space_objects_data_from_file():
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
 
@@ -28,7 +29,7 @@ def __read_space_objects_data_from_file(input_filename):
     """
 
     objects = []
-    with open(input_filename, 'r') as input_file:
+    with filedialog.askopenfile(mode='r') as input_file:
         for line in input_file:
             if len(line.strip()) == 0 or line[0] == '#':
                 continue  # пустые строки и строки-комментарии пропускаем
@@ -95,7 +96,7 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
+            out_file.write( "%s %d %s %f" % ('1', 2, '3', 4.5))
             # FIXME!
 
 
