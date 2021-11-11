@@ -2,8 +2,8 @@
 # license: GPLv3
 
 from solar_vis import *
-from solar_model import init, tick
-from solar_input import open_file
+from solar_model import init, tick, space_objects
+from solar_input import open_file, write_space_objects_data_to_file
 import thorpy
 import time
 import numpy as np
@@ -128,6 +128,7 @@ def main():
         time.sleep(1.0 / 60)
 
     print('Modelling finished!')
+    write_space_objects_data_to_file("results.txt", space_objects)
 
 
 if __name__ == "__main__":
