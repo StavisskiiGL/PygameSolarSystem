@@ -19,12 +19,14 @@ time_scale = 1000.0
 Тип: float"""
 
 
+
 def start_execution():
-    """Обработчик события нажатия на кнопку Start.
+    """Обработчик события нажатия на кнопку Play/Pause.
     Запускает циклическое исполнение функции execution.
     """
     global perform_execution
     perform_execution = True
+    
 
 
 def pause_execution():
@@ -62,6 +64,7 @@ def slider_reaction(event):
 
 
 def init_ui(screen):
+    global button_play
     slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
     slider.user_func = slider_reaction
     button_stop = thorpy.make_button("Quit", func=stop_execution)
@@ -73,7 +76,7 @@ def init_ui(screen):
 
     box = thorpy.Box(elements=[
         slider,
-        button_pause, 
+        button_pause,
         button_stop, 
         button_play, 
         button_load,
@@ -112,7 +115,6 @@ def main():
     last_time = time.perf_counter()
     drawer = Drawer(screen)
     menu, box, timer = init_ui(screen)
-    perform_execution = True
 
     while alive:
         handle_events(pg.event.get(), menu)
