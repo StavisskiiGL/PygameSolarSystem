@@ -9,7 +9,8 @@ space_objects = []
 
 
 def init(space_objects__):
-    global space_objects
+    global space_objects, model_time
+    model_time = 0
     space_objects = space_objects__
 
 
